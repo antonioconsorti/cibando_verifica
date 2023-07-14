@@ -1,3 +1,4 @@
+import { UserService } from './../../../services/user.service';
 
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
      private router: Router,
-     private messageService: MessageService
+     private messageService: MessageService,
+     private userService: UserService
      ) { }
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
           this.user = res;
           if(res) {
             this.authService.saveStorage(res);
+            this.userService.ruoloUtente.next(res.role);
             this.messageService.add({severity:'success', summary:'Successo', detail:'Login effettuato con successo', life: 3000});
             this.chiudi.emit(true);
 

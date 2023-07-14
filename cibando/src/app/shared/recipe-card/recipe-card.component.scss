@@ -92,3 +92,17 @@
     margin-left: 2.5%!important;
   }
 }
+ //PARTE VERIFICA////////////////////////
+
+ .divBalls{
+  height: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+ }
+
+.grayscale-card {
+  filter: grayscale(50%);
+}
+
+ //PARTE VERIFICA////////////////////////

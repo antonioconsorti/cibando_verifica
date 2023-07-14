@@ -10,7 +10,7 @@
   <p-paginator [rows]="ricettePerPagina" [totalRecords]="totRicette.length" (onPageChange)="paginate($event)" (rowsPerPageOptionsChange)="ricettePerPagina"></p-paginator>
 </div>
 
-  <div class="card" *ngFor="let ricetta of ricette | slice: (page * ricettePerPagina) - ricettePerPagina : page * ricettePerPagina">
+  <div class="card" [ngClass]="{ 'grayscale-card': !ricetta.published}" *ngFor="let ricetta of ricette | slice: (page * ricettePerPagina) - ricettePerPagina : page * ricettePerPagina">
     <div class="card-image" [ngStyle]="{'background-image': 'url('+ ricetta.image + ')'}" (click)="inviaTitolo(ricetta.title)"></div>
     <div class="card-body">
       <h5 class="card-title">{{ricetta.title}}</h5>
@@ -27,6 +27,15 @@
         <!-- <a class="btn btn-primary" [routerLink]="'dettaglio/' + recipe.title +'/'+ recipe._id">Dettaglio</a> -->
       </div>
 
+      <div class="divBalls"  *ngIf="ruolo == 'admin' && auth.isLogged()">
+        <button class="btn btn-primary ball" type="button" (click)="openModal2(ricetta)"><i class="pi pi-trash"></i></button>
+        <button class="btn btn-primary ball" type="button" (click)="modificaVisuale(ricetta)">
+          <i *ngIf="ricetta.published" class="pi pi-eye"></i>
+          <i *ngIf="!ricetta.published" class="pi pi-eye-slash"></i>
+        </button>
+        <button class="btn btn-primary ball" type="button" (click)="openModal(ricetta)"><i class="pi pi-file-edit"></i></button>
+      </div>
+
     </div>
   </div>
   <ng-content select="[secondaIncursione]"></ng-content>
@@ -37,3 +46,67 @@
   </div>
 
 </div>
+
+<ng-template #myModal let-modal>
+  <div class="modaleModifica">
+    <div class="modal-header">
+      <h4 class="modal-title">Aggiorna Ricetta</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()">
+      </button>
+    </div>
+    <div class="modal-body">
+      <section>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div>
+            <label for="title">Titolo della ricetta</label>
+            <input type="text" id="title" name="title" class="form-control" formControlName="title" required>
+          </div>
+          <div>
+            <label for="description">Descrizione</label>
+            <ckeditor [editor]="editor" [config]="editorConfig" class="form-control description" formControlName="description"></ckeditor>
+          </div>
+          <div>
+            <label for="image">Scrivi l'URL della foto</label>
+            <input type="text" id="image" name="image" class="form-control" formControlName="image">
+          </div>
+          <div>
+            <label for="title">Difficoltà</label>
+            <select class="form-control select" formControlName="difficulty">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" (click)="modal.dismiss()">Aggiorna</button>
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annulla</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #myModal2 let-modal>
+  <div class="modaleDelete">
+
+  <div class="modal-header">
+    <h4 class="modal-title">Attenzione</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()">
+    </button>
+  </div>
+    <h4>Stai eliminando questa ricetta:</h4>
+    <div class="modal-body">
+      <img [src]="image_" alt="Immagine Ricetta" class="modal-image">
+      <h4 class="modal-title">{{title_}}</h4>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annulla</button>
+    <button type="button" class="btn btn-primary" (click)="deleteRecipe()" (click)="modal.dismiss()">Elimina ricetta</button>
+  </div>
+  </div>
+</ng-template>
+<p-toast position="bottom-right"></p-toast>

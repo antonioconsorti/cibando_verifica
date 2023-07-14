@@ -45,4 +45,13 @@ export class RecipeService {
     return this.http.get<Recipe[]>(`${this.apiBaseUrl}/cerca/${text}`)
   }
 
+  ///////////////////////
+  updateRecipe(id: number, ricetta: Recipe): Observable<any> {
+    console.log(ricetta, '222222222222222222222')
+    return this.http.put<any>(`${this.apiBaseUrl}/${id}`, ricetta);
+  }
+
+  deleteRecipe(ricetta: Recipe): Observable<any> {
+    return this.http.delete<any>(`${this.apiBaseUrl}/${ricetta._id}`, {body: ricetta});
+  }
 }

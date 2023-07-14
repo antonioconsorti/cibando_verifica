@@ -200,3 +200,57 @@ ngb-pagination {
 // }
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+//PARTE VERIFICA/////////////
+button.btn.btn-primary.ball {
+  background-color: white!important;
+  color: $primary-color-1!important;
+  border: 2px solid $primary-color-1!important;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  padding: 12px;
+}
+button.btn.btn-primary.ball:hover {
+  background-color: $primary-color-1!important;
+  color: white!important;
+}
+i.pi.pi-trash, i.pi.pi-eye, i.pi.pi-eye-slash, i.pi.pi-file-edit{
+  padding: 10px;
+}
+
+// ngb-modal-window.d-block.modal.fade.show {
+//   display: flex!important;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+.modaleDelete{
+
+  h4{
+    font-weight: bold;
+  }
+  .modal-body{
+    height: 400px!important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .modal-image{
+      border: 5px solid black;
+      border-radius: 50%;
+      width: 300px;
+      height: 300px;
+    }
+  }
+  .modal-footer{
+    background-color: white!important;
+  }
+}
+.modaleModifica{
+  .modal-footer{
+    background-color: white!important;
+  }
+
+}
+//PARTE VERIFICA/////////////

@@ -11,7 +11,7 @@ export class UserService {
   apiBaseUrl = "api/users"
   //datiUtente = new Subject();
   datiUtente = new ReplaySubject;
-
+  ruoloUtente = new ReplaySubject;
 
   constructor(private http: HttpClient) { }
 
